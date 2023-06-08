@@ -1,0 +1,46 @@
+syntax = "proto3";
+package trivyJavaDB;
+
+option go_package = "pkg/serverpb";
+
+message SelectIndexByArtifactIDAndGroupIDRequest {
+  string ArtifactID = 1;
+  string GroupID = 2;
+}
+
+message IndexElement {
+  string GroupID = 1;
+  string ArtifactID = 2;
+  string Version = 3;
+  bytes SHA1 = 4;
+  string ArchiveType = 5;
+}
+
+message SelectIndexByArtifactIDAndGroupIDResponse {
+  IndexElement Index = 1;
+}
+
+message SelectIndexBySha1Request {
+  string SHA1 = 1;
+}
+
+message SelectIndexBySha1Response {
+  IndexElement Index = 1;
+}
+
+message SelectIndexesByArtifactIDAndFileTypeRequest {
+  string ArtifactID = 1;
+  string FileType = 2;
+}
+
+message SelectIndexesByArtifactIDAndFileTypeResponse {
+  repeated IndexElement Index = 1;
+}
+
+service TrivyJavaDB {
+
+  rpc SelectIndexByArtifactIDAndGroupID(SelectIndexByArtifactIDAndGroupIDRequest) returns (SelectIndexByArtifactIDAndGroupIDResponse) {}
+  rpc SelectIndexBySha1(SelectIndexBySha1Request) returns (SelectIndexBySha1Response) {}
+  rpc SelectIndexesByArtifactIDAndFileType(SelectIndexesByArtifactIDAndFileTypeRequest) returns (SelectIndexesByArtifactIDAndFileTypeResponse) {}
+
+}
